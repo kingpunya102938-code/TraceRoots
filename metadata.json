@@ -1,0 +1,6 @@
+{
+  "name": "TraceRoots",
+  "description": "Smart agricultural supply-chain tracking website connecting farmers, wholesalers, retailers, transporters, and consumers from farm to fork using secure QR codes.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

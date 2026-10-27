@@ -1,0 +1,970 @@
+MASTER PROMPT FOR GOOGLE AI STUDIO
+Project: TraceRoots — Smart Agricultural Supply Chain Tracking Website
+Act as a senior full-stack developer, UI/UX designer, database architect, cybersecurity engineer, and product designer. Build a complete, functional, production-oriented agricultural supply-chain tracking website called TraceRoots.
+The website must allow agricultural produce to be tracked from the farmer to the wholesaler, retailer, and finally the consumer using unique QR codes. Each participant adds their own transaction and transportation information, creating a transparent, chronological history of the produce.
+Do not build just a landing page, static prototype, or visual mockup. Build a complete working application with frontend, backend, database, authentication, QR generation and scanning, payment integration, role-based access, and responsive design.
+If a feature requires an external service or API key, implement the integration structure and clearly explain how to configure it. Never pretend that a payment, authentication, database operation, or verification succeeded when it did not.
+
+1. WEBSITE DESIGN AND VISUAL IDENTITY
+Create a colourful, bright, clean, modern, agriculture-themed website.
+Colour palette
+Primary green: #36A853
+Fresh lime: #8BCF5B
+Sky blue: #45B8E8
+Warm yellow: #FFD166
+Soft orange: #FFAD66
+White: #FFFFFF
+Pale green backgrounds: #F1FAF0
+Light blue backgrounds: #EFF8FF
+Light grey borders: #E5E7EB
+Avoid dark themes, black backgrounds, and dark, gloomy colour schemes. Text can use dark green or charcoal for readability, but the overall interface must remain bright.
+Visual style
+Rounded cards and buttons.
+Clean typography.
+Friendly agricultural illustrations.
+Farm, crop, truck, warehouse, shop, QR code, and consumer icons.
+Subtle animations and hover effects.
+Clear progress indicators.
+Colour-coded freshness indicators.
+Attractive charts and timelines.
+Plenty of white space.
+Consistent navigation and spacing.
+Accessible colour contrast and readable font sizes.
+Create a professional logo featuring a leaf combined with a QR code or tracking symbol.
+Website name: TraceRoots
+Suggested tagline: "From Farm to Fork, Every Step Tracked."
+The website should look trustworthy enough for farmers, wholesalers, retailers, agricultural businesses, and ordinary consumers.
+
+2. USER ROLES AND REGISTRATION
+Create a registration and login system with a role-selection page.
+When a user first opens the website, display:
+"Welcome to TraceRoots — Track Produce. Build Trust."
+Ask the user:
+"Who are you?"
+Provide the following options as colourful cards:
+1.Farmer
+2.Wholesaler
+3.Retailer
+4.Consumer
+5.Transporter
+6.Other / Supply Chain Partner
+Each card should have an appropriate icon, description, and button.
+Registration fields
+Full name.
+Mobile number.
+Email address, where applicable.
+Password or secure authentication method.
+User role.
+Business name, where applicable.
+Address or business location.
+Optional profile picture.
+Required consent to applicable terms and privacy policy.
+Allow users to sign in, sign out, reset passwords, and manage their profiles.
+Use secure authentication. A user must not be able to gain another role's permissions by simply editing their browser or changing a request.
+Use role-based access control enforced on the server and database, not just by hiding interface elements.
+Role-based dashboards
+After login, automatically redirect each user to the appropriate dashboard:
+Farmer Dashboard
+Wholesaler Dashboard
+Retailer Dashboard
+Consumer Dashboard
+Transporter Dashboard
+Partner Dashboard
+Users must only access functions and records permitted for their role.
+
+3. FARMER DASHBOARD
+The farmer is the person who creates a new produce tracking record.
+Create an attractive farmer dashboard containing:
+Welcome message with the farmer's name.
+Total batches registered.
+Batches currently in transit.
+Batches delivered.
+Active QR codes.
+Produce type and quantity.
+Recent tracking activity.
+Monthly subscription status.
+Button to register new produce.
+Button to view all produce records.
+Button to view tracking history.
+Button to print or download QR codes.
+Notifications and account settings.
+3.1 Register New Produce
+Create a detailed form titled "Register New Produce Batch".
+Include the following fields:
+Farmer information
+Farmer's full name, prefilled from the logged-in account.
+Farm name.
+Farmer ID.
+Contact information.
+Farm location.
+Produce information
+Produce name.
+Produce category.
+Variety, if applicable.
+Quantity.
+Unit of measurement: kg, quintal, tonne, crate, or other.
+Harvest date.
+Harvest time, optionally.
+Expected shelf life or storage conditions, where known.
+Storage method.
+Batch description.
+Optional image of the produce.
+Optional notes about quality or handling.
+Departure information
+Departure location.
+Departure date.
+Departure time.
+Destination, if known.
+Transport method.
+Vehicle or transporter details, where applicable.
+Automatic date and location detection
+Implement the following behaviour:
+1.The departure date must automatically default to the current local date.
+2.The departure time must default to the current local time.
+3.The departure location should be obtained through the browser's geolocation API when the user grants permission.
+4.Convert coordinates into a readable address using a geocoding service if configured.
+5.Show the detected location on the form.
+6.Allow the user to edit the location manually.
+7.Allow the user to change the automatically populated date and time.
+8.If location permission is denied, allow manual location entry.
+9.If geolocation or geocoding fails, display a helpful message instead of crashing.
+10.Clearly distinguish the actual device location from a manually entered location.
+Do not silently replace a manually edited value with a newly detected location.
+Validate all required fields before allowing the farmer to create a batch.
+
+4. UNIQUE BATCH ID AND QR CODE GENERATION
+After the farmer completes the form and submits it successfully, automatically generate:
+1.A unique batch ID.
+2.A unique, unpredictable public tracking token.
+3.A QR code that links to the batch's public tracking page.
+4.A printable QR label.
+Use a unique ID format such as:
+FT-2026-XXXXXXXX
+The example is illustrative; ensure that every ID is genuinely unique and generated securely.
+QR code requirements
+The QR code must:
+Be generated only after successful batch registration.
+Link to the actual tracking record.
+Use a cryptographically secure, unpredictable token or secure tracking URL.
+Never expose private database IDs, passwords, payment data, or secret API keys.
+Remain valid throughout the batch's tracking lifecycle.
+Support scanning with ordinary smartphone cameras and the website's scanner.
+Display the correct batch record.
+Reject invalid or unknown tracking tokens.
+Avoid creating duplicate batches if the user submits the same request twice accidentally.
+QR code display page
+After registration, show a success screen with:
+"Produce Registered Successfully!"
+Batch ID.
+Produce name.
+Harvest date.
+Farmer name.
+Registration date.
+QR code preview.
+Download QR Code button.
+Print QR Label button.
+View Tracking Page button.
+Register Another Batch button.
+Printable label
+Design a professional printable label containing:
+TraceRoots logo.
+QR code.
+Batch ID.
+Produce name.
+Farmer or farm name.
+Harvest date.
+A short instruction: "Scan to trace this produce."
+Optional handling instructions.
+The label must print cleanly on A4 paper and smaller label formats. Hide navigation menus, buttons, and other website elements in print mode.
+Provide QR downloads in PNG and, if practical, SVG.
+
+5. SUPPLY-CHAIN TRACKING WORKFLOW
+The produce should move through a chain such as:
+Farmer → Wholesaler → Retailer → Consumer
+Transporters and additional wholesalers or retailers may be included where relevant.
+Each batch must have a chronological event history.
+Step 1: Farmer creates the batch
+The farmer enters the produce information, harvest date, and departure information.
+The system generates the unique batch ID and QR code.
+Record the batch creation event and its initial status.
+Step 2: Wholesaler scans the QR code
+When the produce reaches a wholesaler:
+1.The wholesaler opens the TraceRoots website.
+2.They choose "Scan Produce QR".
+3.The camera scanner opens after permission is granted.
+4.They scan the batch QR code.
+5.The system retrieves the correct batch.
+6.The wholesaler sees the permitted farmer and produce information.
+7.The wholesaler fills in a new transaction and arrival/departure form.
+Wholesaler form fields:
+Wholesaler's registered name.
+Business name.
+Purchase price.
+Purchase quantity.
+Arrival location.
+Arrival date and time.
+Departure location.
+Departure date and time.
+Selling price.
+Storage method.
+Storage temperature, if known.
+Condition of produce upon arrival.
+Transport details.
+Destination or next participant, if known.
+Notes.
+Optional produce photographs.
+Automatically prefill arrival date/time and location using the same current-date, current-time, and geolocation mechanism described earlier.
+All detected values must remain editable.
+Allow the wholesaler to manually select or enter the actual arrival and departure locations when GPS is unavailable or inappropriate.
+After submission, add a new event to the batch history.
+The wholesaler must not be able to edit the original farmer's information or change previously recorded events.
+Step 3: Retailer scans the QR code
+Implement the same workflow for the retailer.
+The retailer scans the QR code, reviews the information they are authorised to see, and records:
+Retailer's name.
+Shop or business name.
+Purchase price.
+Selling price.
+Quantity received.
+Arrival location.
+Arrival date and time.
+Departure location, if the goods are moved again.
+Departure date and time, where applicable.
+Storage conditions.
+Condition of produce.
+Notes.
+Optional photographs.
+The retailer submits the event, which becomes part of the batch history.
+Step 4: Additional supply-chain partners
+Support repeated handoffs to additional wholesalers, retailers, or transporters where appropriate.
+Do not hard-code the system to allow only one wholesaler or one retailer.
+Every new handoff must append an event rather than overwrite the earlier history.
+For transporters, capture:
+Transporter name or registered business.
+Pickup location and time.
+Delivery location and time.
+Transport method.
+Storage or temperature conditions, if relevant.
+Notes about delays or handling.
+Step 5: Consumer scans the QR code
+The consumer scans the QR code using their smartphone.
+Display a consumer-friendly tracking page with:
+Produce name and image.
+Farmer or farm name.
+Harvest date.
+Batch ID.
+Origin location.
+Supply-chain journey.
+Current known location or last recorded location.
+Arrival and departure dates at each stage.
+Total elapsed time since harvest.
+Time spent at each recorded stage.
+Estimated freshness status.
+Handling and storage information where recorded.
+Any gaps or missing information in the recorded history.
+The consumer should be able to understand where the produce originated and the steps it passed through.
+Allow the consumer to identify themselves as a consumer and complete the appropriate paid scan workflow.
+Do not require consumers to reveal unnecessary personal information merely to see basic public traceability information.
+
+6. PUBLIC TRACKING PAGE
+Create a dedicated public tracking page for every valid QR code.
+Example route:
+/track/{secureTrackingToken}
+This page must work on smartphones, tablets, and computers.
+It must show only information intended for public viewing.
+Public information
+Batch ID.
+Produce name and category.
+Harvest date.
+Farmer or farm name, subject to consent.
+Origin location.
+Supply-chain participants' business names where appropriate.
+Recorded arrival and departure dates.
+Recorded locations.
+Handling and storage information.
+Tracking timeline.
+Estimated freshness status.
+Whether information is missing or unverified.
+Private information
+Do not expose:
+Purchase prices.
+Selling prices.
+Participant account credentials.
+Private phone numbers or email addresses.
+Personal home addresses.
+Internal database identifiers.
+Payment details.
+Sensitive business information.
+The public tracking page should clearly identify information as either:
+Submitted by a registered participant.
+Automatically recorded by the platform.
+Manually entered.
+Not verified independently.
+Do not claim that a location, transaction, or food-quality measurement has been independently verified unless an actual verification method exists.
+
+7. FARMER'S COMPLETE TRACKING HISTORY
+The farmer who registered a batch must have a special dashboard for tracking its progress.
+The farmer can view:
+Original registration information.
+Harvest date.
+All recorded locations.
+Every arrival and departure date.
+Every recorded supply-chain participant.
+Time spent at each stage.
+Current recorded status.
+Estimated freshness.
+All recorded purchase prices and selling prices at every supply-chain stage.
+Quantity movements, where recorded.
+Recorded storage and handling information.
+Transaction history.
+Full chronological event history.
+Missing events and delays.
+Downloadable tracking reports.
+Important price privacy rule
+The farmer is authorised to see the complete price history for their registered batches.
+Wholesalers and retailers may see prices from transactions they are authorised to participate in, but must not automatically see the prices charged by other participants.
+Consumers must not see purchase prices, selling prices, or private financial details.
+Implement this rule in backend/database permissions and server responses. Hiding prices using frontend styling alone is not sufficient.
+The farmer should not be able to change another participant's transaction prices or rewrite past events.
+
+8. FRESHNESS ESTIMATION SYSTEM
+Build a visual freshness estimation system based on the produce type, harvest date, recorded storage conditions, and available tracking information.
+Display freshness using clear colour-coded cards, progress bars, and labels.
+Suggested freshness colours
+Green — Estimated fresh The produce is within its expected shelf-life window under the assumptions used by the system.
+Yellow — Freshness declining The produce is approaching its estimated shelf-life limit.
+Orange — Use caution The estimated shelf-life limit is close or the available handling information suggests increased uncertainty.
+Red — Estimated shelf-life limit exceeded The expected shelf-life window has passed or the produce may require additional assessment.
+Grey — Insufficient data The system lacks enough reliable information to estimate freshness confidently.
+Freshness calculation
+Implement a configurable freshness estimation engine.
+Inputs may include:
+Produce type and variety.
+Harvest date and time.
+Current date and time.
+Produce-specific expected shelf-life range.
+Storage method.
+Recorded temperature.
+Known interruptions in refrigeration.
+Transportation duration.
+Handling conditions.
+Missing or uncertain tracking information.
+Use a configurable produce database rather than a single shelf-life value for every crop.
+Examples of produce categories:
+Leafy vegetables.
+Root vegetables.
+Tomatoes and similar fruit vegetables.
+Apples and other fruits.
+Bananas and other tropical fruits.
+Potatoes and onions.
+Grains and pulses.
+Other produce.
+Provide editable, documented shelf-life estimates with appropriate assumptions.
+When actual storage temperatures and handling information are unavailable, show the estimate as uncertain and use conservative assumptions.
+Freshness display example
+"Estimated freshness: Green"
+"Time since harvest: 2 days, 5 hours"
+"Estimated shelf-life remaining: Approximately 3–5 days under the selected storage assumptions."
+"Confidence: Limited — storage temperature history is incomplete."
+All figures must be calculated from actual stored data and configured produce parameters, not hard-coded into the interface.
+Important food safety limitation
+Do not present estimated freshness as proof that food is safe to eat.
+Freshness is an estimate, not a guarantee of food safety, quality, or remaining usable life. The system must not conclude that produce is safe solely because its status is green.
+Show an appropriate disclaimer and clearly distinguish freshness estimates from actual inspections or laboratory testing.
+
+9. PRICING AND SUBSCRIPTION SYSTEM
+Implement the following business model.
+Farmer subscription
+Price: ₹100 per month.
+Features available to subscribed farmers:
+Register produce batches.
+Generate QR codes.
+Track registered batches.
+View complete tracking history.
+View price history for their batches.
+Download and print labels.
+Access their farmer dashboard.
+Create:
+Subscription status.
+Start date.
+Renewal date.
+Payment history.
+Renewal reminders.
+Expired subscription handling.
+Cancellation and renewal controls.
+The system must accurately distinguish active, pending, failed, cancelled, and expired subscriptions.
+Decide and document how batches registered during an active subscription remain traceable after a subscription expires. Do not delete tracking records or invalidate previously issued QR codes merely because the subscription has expired.
+Consumer scan fee
+Price: ₹10 per paid consumer scan.
+Create a scan-payment workflow:
+1.Consumer scans a valid QR code.
+2.System identifies the batch.
+3.Display the applicable ₹10 fee before payment.
+4.Consumer confirms and pays.
+5.Server verifies the payment with the payment provider.
+6.Only after verified payment, record the paid scan and unlock the paid features.
+7.Display the payment receipt and scan details.
+8.Record the payment status and scan transaction ID.
+Prevent duplicate charges caused by page refreshes, repeated requests, or payment callbacks.
+Use idempotency and server-side payment verification.
+Define a scan consistently, for example, as a paid consumer access transaction for a particular batch, with the billing rules disclosed before payment. Do not charge every time the user refreshes the page.
+Basic public traceability information may remain available without payment, while the ₹10 fee unlocks the designated paid consumer experience. Clearly define this distinction in the interface.
+Do not charge wholesalers, retailers, or transporters unless a future pricing rule is explicitly configured.
+Payment integration
+Prepare a payment integration suitable for India, such as Razorpay, with a test mode and a production mode.
+Requirements:
+Never place secret API keys in frontend code.
+Create payment orders on the server.
+Verify payment signatures server-side.
+Verify final payment status.
+Handle success, failure, cancellation, and pending states.
+Store payment records securely.
+Implement webhook verification.
+Do not simulate successful payments in production.
+Provide a clearly marked development/test payment mode.
+If payment credentials are unavailable, provide an honest setup screen and explain which environment variables and dashboard settings are required.
+
+10. SCANNING AND QR CAMERA FUNCTIONALITY
+Build an integrated QR scanner.
+Requirements:
+Request camera permission only when the user starts scanning.
+Support rear-camera selection where available.
+Provide a manual tracking ID or URL entry option.
+Handle invalid QR codes.
+Handle camera permission denial.
+Display a clear scanning indicator.
+Stop the camera when scanning is complete or the user exits.
+Prevent duplicate scan events.
+Display the batch summary after a successful scan.
+Support common smartphone browsers.
+Provide clear error messages and retry controls.
+The website should also allow consumers to scan QR codes with their phone's native camera and open the public tracking page directly.
+
+11. LOCATION AND TIME SYSTEM
+Create a reusable location and time service used by all relevant forms.
+Date and time
+Default to the current date and time.
+Use an appropriate local timezone.
+Store timestamps consistently in the database, preferably UTC.
+Display timestamps in the user's or recorded location's appropriate timezone when available.
+Keep date/time fields editable.
+Store the submitted values and their provenance.
+Record server-side event creation time separately from user-entered arrival or departure time.
+Location
+Request geolocation permission when needed.
+Convert coordinates into a readable address when a geocoding provider is configured.
+Allow manual address entry.
+Allow location correction before submission.
+Preserve the original submitted information.
+Avoid tracking the user's location continuously.
+Do not collect location data without a clear purpose and appropriate consent.
+Use an environment variable for any geocoding API key.
+
+12. DASHBOARDS FOR EACH ROLE
+Wholesaler dashboard
+Include:
+Incoming batches.
+Recently scanned produce.
+Batches received.
+Batches dispatched.
+Purchase and sales records.
+QR scanning.
+Arrival and departure forms.
+Tracking history for authorised transactions.
+Search and filtering.
+Retailer dashboard
+Include:
+Batches received.
+Current inventory, where tracked.
+Batches sold or transferred.
+Purchase and sales records.
+QR scanner.
+Arrival and departure forms.
+Tracking history.
+Search and filtering.
+Consumer dashboard
+Include:
+QR scan option.
+Recently accessed batches.
+Paid scan history.
+Payment receipts.
+Saved tracking records, if the user chooses to save them.
+Produce journey timeline.
+Freshness estimates.
+Account settings.
+Transporter dashboard
+Include:
+Assigned deliveries.
+Pickup and drop-off forms.
+Recorded transport times.
+Delivery status.
+Storage and handling notes.
+Delivery history.
+Partner dashboard
+Allow appropriately authorised additional supply-chain participants to record handoffs and access only the records needed for their work.
+
+13. TRACKING TIMELINE AND JOURNEY VISUALISATION
+Build an attractive vertical timeline and an optional journey map.
+Each timeline event should contain:
+Participant role.
+Participant or business name.
+Event type.
+Arrival date and time.
+Departure date and time.
+Recorded location.
+Duration at the stage.
+Storage and handling notes.
+Transaction reference where appropriate.
+Event status.
+Whether the information is verified or user-submitted.
+Display a clear sequence:
+Harvested → Registered → Picked Up → Wholesaler Received → Wholesaler Dispatched → Retailer Received → Retailer Dispatched → Consumer Accessed
+Only display events that actually occurred.
+If a stage has not been recorded, show "Not recorded yet" rather than inventing an event.
+If a map service is configured, show recorded journey locations on a map. If not, provide a readable timeline without a map.
+Never fabricate routes, distances, or travel durations.
+
+14. SEARCH, FILTERS, AND REPORTS
+Implement:
+Search by batch ID.
+Search by produce name.
+Search by date range.
+Search by status.
+Filter by supply-chain stage.
+Filter by freshness category.
+Sort by newest, oldest, and other relevant fields.
+Pagination for large datasets.
+Export authorised records to CSV.
+Download printable batch reports.
+Print QR labels and tracking summaries.
+All search and export operations must respect role-based access permissions.
+
+15. NOTIFICATIONS
+Create an in-app notification system.
+Potential notifications:
+New batch registered.
+Produce received by a wholesaler.
+Produce transferred to a retailer.
+Batch delivered.
+Subscription renewal approaching.
+Subscription payment failed.
+Consumer scan payment successful.
+Missing tracking information.
+Batch approaching its estimated shelf-life limit.
+Notifications must be based on actual database events.
+Prepare optional email or SMS integration, but do not claim messages have been sent unless the relevant service confirms success.
+
+16. DATABASE DESIGN
+Design a proper relational or document-based database with clearly defined collections/tables and relationships.
+At minimum, support the following entities:
+Users
+Internal user ID.
+Full name.
+Authentication identifier.
+Role.
+Business name.
+Contact details.
+Account status.
+Creation date.
+Relevant consent records.
+ProduceBatches
+Internal batch ID.
+Public batch identifier.
+Secure tracking token.
+Farmer ID.
+Produce name and category.
+Variety.
+Quantity and unit.
+Harvest date/time.
+Origin location.
+Initial departure details.
+Storage assumptions.
+Registration timestamp.
+Current recorded status.
+TrackingEvents
+Event ID.
+Batch ID.
+Participant ID.
+Event type.
+Arrival location.
+Arrival date/time.
+Departure location.
+Departure date/time.
+Recorded transaction information.
+Storage and handling information.
+Submitted notes.
+Server timestamp.
+Information provenance.
+Event sequence number.
+Transactions
+Transaction ID.
+Batch ID.
+Buyer ID.
+Seller ID.
+Quantity.
+Purchase price.
+Selling price, when applicable.
+Currency.
+Transaction timestamp.
+Related tracking event.
+Subscriptions
+Subscription ID.
+Farmer ID.
+Plan.
+Amount.
+Currency.
+Status.
+Start date.
+Renewal date.
+Payment provider reference.
+ConsumerScans
+Scan ID.
+Batch ID.
+Consumer ID where available.
+Payment reference where applicable.
+Scan timestamp.
+Access entitlement.
+Refund or reversal status, if applicable.
+Payments
+Payment ID.
+User ID.
+Related subscription or scan.
+Amount.
+Currency.
+Payment provider.
+Provider transaction reference.
+Verification status.
+Created timestamp.
+Updated timestamp.
+FreshnessParameters
+Produce category.
+Produce type.
+Shelf-life range.
+Storage assumptions.
+Applicable temperature ranges.
+Source or reference notes.
+Last updated timestamp.
+Create appropriate database indexes and constraints.
+Use database transactions where needed to ensure that batch creation, event creation, and payment records remain consistent.
+Do not store passwords in plain text. Use a trusted authentication provider.
+
+17. SECURITY AND PRIVACY
+Treat security as a core requirement.
+Implement:
+Secure authentication.
+Role-based authorisation.
+Server-side permission checks.
+Database security rules.
+Input validation on both frontend and backend.
+Protection against SQL/NoSQL injection.
+XSS protection.
+CSRF protection where applicable.
+Rate limiting for sensitive endpoints.
+Secure session handling.
+Secure QR tracking tokens.
+Payment signature verification.
+Server-side price and entitlement validation.
+Audit logging.
+Secure environment variable handling.
+Least-privilege access.
+Privacy-conscious location collection.
+Appropriate account deletion and data-retention workflows.
+Error messages that do not expose sensitive internals.
+Tracking history integrity
+Previously recorded tracking events should not be silently edited or deleted by ordinary users.
+Use append-only tracking events with server-generated timestamps and sequence numbers.
+If corrections are necessary, record a correction event with:
+Who made the correction.
+When it was made.
+Which previous record it refers to.
+The reason for correction.
+The corrected information.
+Do not describe the records as tamper-proof or blockchain-verified unless a genuine, implemented mechanism supports that claim.
+Critical access rules
+A farmer can see the price history of their own registered batches.
+A wholesaler can see the financial records they are authorised to access.
+A retailer can see the financial records they are authorised to access.
+A consumer cannot access private transaction prices.
+Public QR access cannot reveal private account data.
+A user cannot impersonate another participant by modifying client-side data.
+A user cannot register a false payment as successful.
+An expired subscription must not erase tracking history.
+Implement and test these permissions explicitly.
+
+18. TECHNOLOGY STACK
+Choose a reliable, modern technology stack suitable for Google AI Studio.
+Preferred implementation:
+Frontend
+React.
+TypeScript.
+Responsive CSS or Tailwind CSS.
+Accessible component design.
+A consistent icon library.
+Client-side form validation.
+A QR-code generation library.
+A browser-compatible QR scanning library.
+Charting library for dashboard statistics where appropriate.
+Backend and database
+Use Firebase or Supabase, or another appropriate backend that can be deployed and maintained reliably.
+For a Firebase-based implementation, consider:
+Firebase Authentication.
+Cloud Firestore.
+Cloud Functions or another trusted server-side execution environment.
+Firebase App Check where suitable.
+Firestore Security Rules.
+For a Supabase-based implementation, consider:
+Supabase Auth.
+PostgreSQL.
+Row Level Security.
+Server-side Edge Functions.
+Select one primary backend and implement it consistently rather than producing disconnected code for multiple backends.
+External integrations
+Prepare configuration for:
+Payment provider suitable for India.
+Geocoding service.
+Optional email or SMS provider.
+Optional map provider.
+All secret keys must be stored in server-side environment variables or the relevant secrets manager.
+Do not expose secret credentials in frontend bundles or public configuration.
+
+19. RESPONSIVE DESIGN
+The complete website must work on:
+Android smartphones.
+iPhones.
+Tablets.
+Laptops.
+Desktop computers.
+Mobile requirements
+Mobile-first layout.
+Large touch targets.
+Easy QR scanning.
+Single-column forms where appropriate.
+Responsive cards.
+Readable timelines.
+Sticky or easily accessible navigation.
+No horizontal overflow.
+Forms that work with mobile keyboards.
+Clear permission prompts.
+Fast-loading pages.
+Desktop requirements
+Sidebar navigation where appropriate.
+Multi-column dashboards.
+Tables for tracking and financial records.
+Readable charts and reports.
+Efficient search and filtering.
+Clear hierarchy between public tracking pages and authenticated dashboards.
+Test layouts at narrow, medium, and wide screen sizes.
+
+20. REQUIRED WEBSITE PAGES
+Create the following pages:
+1.Landing page.
+2.Login page.
+3.Registration page.
+4.Role selection page.
+5.Forgot password page.
+6.Farmer dashboard.
+7.Register produce page.
+8.Batch registration success page.
+9.QR code preview and printing page.
+10.Batch details page.
+11.Public tracking page.
+12.QR scanner page.
+13.Wholesaler dashboard.
+14.Retailer dashboard.
+15.Consumer dashboard.
+16.Transporter dashboard.
+17.Partner dashboard.
+18.Tracking history page.
+19.Farmer price history page.
+20.Freshness details page.
+21.Subscription page.
+22.Payment page.
+23.Payment result and receipt page.
+24.Notification centre.
+25.Profile and settings page.
+26.Help and FAQ page.
+27.Privacy policy page.
+28.Terms and conditions page.
+29.Error and invalid QR page.
+30.Administrator dashboard.
+Create an appropriate navigation menu for each role.
+Do not show administrative or private business pages to unauthorised users.
+
+21. ADMINISTRATOR DASHBOARD
+Create a protected administrator interface with access restricted to explicitly authorised administrator accounts.
+Features:
+User management.
+Role management.
+Batch search and investigation.
+Subscription overview.
+Payment reconciliation.
+Scan transaction overview.
+Produce category management.
+Freshness parameter management.
+Audit logs.
+System health indicators.
+Configuration for supported pricing plans.
+Administrators should not be able to casually rewrite historical events without creating an auditable correction record.
+Do not grant administrator privileges to newly registered users.
+
+22. USER EXPERIENCE AND ERROR HANDLING
+Every interactive control must work.
+Implement:
+Loading states.
+Success messages.
+Validation messages.
+Empty states.
+Error states.
+Confirmation dialogs for important actions.
+Retry options.
+Disabled states while requests are processing.
+Duplicate submission prevention.
+Helpful messages when camera or location permission is unavailable.
+Clear instructions for expired subscriptions and failed payments.
+Never use a button that looks functional but does nothing.
+Do not create fake data and present it as live tracking information.
+If demo data is provided for development, clearly label it as demo data and keep it separate from real production records.
+
+23. PERFORMANCE AND ACCESSIBILITY
+Optimise the application for users who may have slow or unreliable internet connections.
+Requirements:
+Minimise unnecessary network requests.
+Load dashboard data efficiently.
+Use pagination for large lists.
+Compress uploaded images where appropriate.
+Avoid unnecessarily large dependencies.
+Show loading feedback for slow operations.
+Provide accessible form labels.
+Support keyboard navigation.
+Use meaningful error messages.
+Ensure readable typography and sufficient colour contrast.
+Do not rely on colour alone to communicate freshness or status.
+
+24. TESTING REQUIREMENTS
+Before declaring the application complete, test the following workflows.
+Workflow A: Farmer
+1.Register a farmer account.
+2.Log in.
+3.Activate a subscription through the configured payment flow.
+4.Register a batch of produce.
+5.Confirm current date and location are populated when permitted.
+6.Change the departure date or location manually.
+7.Submit the batch.
+8.Confirm a unique batch ID and QR code are generated.
+9.Print or download the QR code.
+10.Open the public tracking page.
+Workflow B: Wholesaler
+1.Register a wholesaler account.
+2.Scan the batch QR code.
+3.Confirm the permitted batch details appear.
+4.Enter purchase and sales details.
+5.Record arrival and departure information.
+6.Submit the event.
+7.Confirm the tracking history is updated.
+8.Confirm the farmer can see the transaction prices.
+9.Confirm unauthorised users cannot edit the event.
+Workflow C: Retailer
+1.Register a retailer account.
+2.Scan the same QR code.
+3.Record the retailer transaction and locations.
+4.Confirm a new event appears in chronological order.
+5.Confirm private financial data remains restricted.
+Workflow D: Consumer
+1.Scan the same QR code.
+2.Confirm the public history is displayed.
+3.Confirm private purchase and selling prices are hidden.
+4.Display the applicable ₹10 scan fee.
+5.Complete a test payment.
+6.Confirm that only a verified payment unlocks the paid consumer features.
+7.Confirm the scan is not charged twice after refreshing the page.
+8.Confirm the freshness estimate uses actual batch data and configured assumptions.
+Workflow E: Security
+1.Attempt to access another user's private dashboard.
+2.Attempt to modify a batch belonging to another farmer.
+3.Attempt to view private prices through the public API.
+4.Attempt to submit a fabricated payment-success response.
+5.Attempt to create duplicate batches or duplicate tracking events.
+6.Attempt to use an invalid tracking token.
+7.Confirm that unauthorised operations are rejected by the backend.
+Workflow F: Responsive design
+Test the major workflows on mobile, tablet, and desktop layouts.
+Fix any issues discovered during testing.
+
+25. IMPLEMENTATION INSTRUCTIONS
+Follow this development process:
+Phase 1: Architecture
+Plan the pages, components, routes, data model, and permissions.
+Select the backend and document the reasoning.
+Define the tracking event lifecycle and payment rules.
+Phase 2: UI implementation
+Build the bright, agriculture-themed design system.
+Create the landing page, authentication pages, role selection, and dashboards.
+Implement responsive navigation and forms.
+Phase 3: Backend integration
+Implement authentication and database access.
+Create batch registration.
+Implement secure QR token generation.
+Implement tracking events and role-based permissions.
+Phase 4: Tracking and freshness
+Implement the public tracking page.
+Implement QR scanning.
+Implement location and time defaults.
+Implement the freshness estimation engine.
+Implement price privacy and the farmer's full tracking history.
+Phase 5: Payments
+Implement farmer subscriptions and paid consumer scans.
+Configure payment verification and webhook handling.
+Provide test and production configuration instructions.
+Phase 6: Testing
+Test every role.
+Test the full farmer-to-consumer journey.
+Test payment verification.
+Test security and privacy.
+Test mobile and desktop layouts.
+Fix runtime errors and broken functionality.
+Phase 7: Deployment
+Provide clear setup instructions.
+Document environment variables.
+Document database configuration and security rules.
+Document payment provider setup.
+Document any required location, camera, and map permissions.
+Provide deployment instructions for the chosen hosting provider.
+
+26. FINAL ACCEPTANCE CRITERIA
+The application is complete only when:
+1.A farmer can register, pay the subscription fee, create a batch, and obtain a unique QR code.
+2.A wholesaler can scan the QR code and record their transaction.
+3.A retailer can scan the same QR code and record their transaction.
+4.Additional supply-chain events can be added without overwriting earlier events.
+5.A consumer can access the tracking page and complete the paid scan flow.
+6.The farmer can see the full event history and all authorised price records for their batches.
+7.Other participants cannot see financial information they are not authorised to access.
+8.Freshness estimates are calculated using configured produce data and actual recorded information.
+9.Date and location fields automatically populate where possible but remain editable.
+10.QR labels can be downloaded and printed.
+11.Payment verification is performed securely on the server.
+12.Database permissions prevent unauthorised access and modifications.
+13.All major workflows function on mobile, tablet, and desktop.
+14.The application handles errors without crashing.
+15.No secret keys are exposed in frontend code.
+16.No fake payments, fake tracking events, or fabricated verification claims are presented as real.
+17.Setup and deployment instructions are complete.
+27. IMPORTANT FINAL INSTRUCTION TO GOOGLE AI STUDIO
+Start by creating the actual application structure and implementing the core workflow end to end.
+Prioritise a working farmer-to-wholesaler-to-retailer-to-consumer journey over decorative features.
+Do not stop after generating the homepage or a set of static dashboard screens.
+Use reusable components, clean TypeScript, maintainable code, clear naming, and appropriate error handling.
+If the application is too large to implement in one pass, divide it into working phases, preserve the existing implementation, and continue from the last completed phase. Do not replace working functionality with placeholders during later phases.
+Before finishing, provide:
+The completed application code.
+The selected technology stack.
+The database schema.
+Security and permission rules.
+Environment variable requirements.
+External API configuration instructions.
+Payment setup instructions.
+Testing results.
+Local development instructions.
+Deployment instructions.
+A list of any remaining limitations or features that still require configuration.
+Build TraceRoots as a practical, secure, and usable agricultural traceability platform that connects farmers, wholesalers, retailers, transporters, and consumers through a shared QR-based tracking system.
